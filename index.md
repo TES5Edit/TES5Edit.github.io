@@ -6,7 +6,7 @@ When started xEdit will automatically find the Data directory. You then have a d
 
 ### fopdoc
 
-The above button labeled fopdoc connects to the Fallout record definitions. It currently has full definitiona for Fallout 3 and fallout New Vegas. Unfortunatly Fallout 4 information is incomplete. The fopdoc site was started and is maintained by WrinklyNinja.
+The above button labeled fopdoc connects to the Fallout record definitions. It has complete definitions for Fallout 3 and Fallout New Vegas. Unfortunatly Fallout 4 information is not finished yet. The fopdoc site was started and is maintained by WrinklyNinja.
 
 ### Wiki Pages
 
