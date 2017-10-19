@@ -4,6 +4,10 @@ xEdit is an advanced graphical module editor and conflict detector for Bethesda 
 
 When started xEdit will automatically find the Data directory. You then have a dialog box to select which masters/plugins you want to load with the current selection from your plugins.txt as default value.
 
+### fopdoc
+
+The above button labeled fopdoc connects to the Fallout record definitions. It currently has full definitiona for Fallout 3 and fallout New Vegas. Unfortunatly Fallout 4 information is incomplete. The fopdoc site was started and is maintained by WrinklyNinja.
+
 ### Wiki Pages
 
 Currently all wiki pages are available at the Bethesda CK Wiki.
