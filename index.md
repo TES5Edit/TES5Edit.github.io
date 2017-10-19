@@ -8,6 +8,10 @@ When started xEdit will automatically find the Data directory. You then have a d
 
 The above button labeled fopdoc connects to the Fallout record definitions. It has complete definitions for Fallout 3 and Fallout New Vegas. Unfortunatly Fallout 4 information is not finished yet. The fopdoc site was started and is maintained by WrinklyNinja.
 
+### Buddah
+
+A simple registry for community-made game modding software by WrinklyNinja. If you would like to learn more then check out his blog post, [Introducing Buddah](https://wrinklyninja.github.io/2016/05/01/introducing-buddah/).
+
 ### Wiki Pages
 
 Currently all wiki pages are available at the Bethesda CK Wiki.
