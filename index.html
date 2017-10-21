@@ -1,0 +1,53 @@
+---
+layout: default
+title: xEdit
+---
+<div id="centered_buttons">
+<a href="https://github.com/TES5Edit/TES5Edit/releases/" class="btngroup">Downloads</a>
+<a href="https://github.com/TES5Edit/fopdoc/" class="btngroup">fopdoc</a>
+<a href="https://wrinklyninja.github.io/buddah/" class="btngroup">buddah</a>
+</div>
+<div id="home">
+<h2>Welcome to the xEdit GitHub Page.</h2>
+<p>xEdit is an advanced graphical module editor and conflict detector for Bethesda games. It currently supports Fallout 3, Fallout New Vegas, Fallout 4, Oblivion, Skyrim, and Skyrim SE.  We refer to the program as xEdit for short.</p>
+<p>When started xEdit will automatically find the Data directory. You then have a dialog box to select which masters/plugins you want to load with the current selection from your plugins.txt as default value.</p>
+
+<h2>fopdoc</h2>
+<p>The above button labeled fopdoc connects to the Fallout record definitions. It has complete definitions for Fallout 3 and Fallout New Vegas. Unfortunatly Fallout 4 information is not finished yet. The fopdoc site was started and is maintained by WrinklyNinja.</p>
+<h2>buddah</h2>
+
+<p>A simple registry for community-made game modding software by WrinklyNinja. If you would like to learn more then check out his blog post,  <a href="https://wrinklyninja.github.io/2016/05/01/introducing-buddah/">Introducing Buddah</a>.</p>
+<h2>Wiki Pages</h2>
+<p>Currently all wiki pages are available at the Bethesda CK Wiki.</p>
+
+<a href="http://www.creationkit.com/index.php?title=Category:TES5Edit/">TES5Edit</a><br>
+<a href="http://www.creationkit.com/index.php?title=TES5Edit_Cleaning_Guide_-_TES5Edit/">TES5Edit Cleaning Guide</a><br>
+<a href="http://www.creationkit.com/index.php?title=TES5Edit_Mod_Cleaning_Tutorial/">TES5Edit Mod Cleaning Tutorial</a><br>
+<a href="http://www.creationkit.com/index.php?title=TES5Edit_Scripting_Functions/">TES5Edit Scripting Functions</a><br>
+
+<h2>Current Documentation</h2>
+
+<a href="http://fallout3.nexusmods.com/mods/8629/">Fallout3 Training Manual</a> for FO3Edit (applies to all game versions)<br>
+<a href="http://newvegas.nexusmods.com/mods/38413/">FNVEdit Training Manual</a> for FNVEdit (applies to all game versions)<br>
+<a href="http://www.creationkit.com/index.php?title=TES5Edit_Documentation/">TES5Edit Documentation</a> at the Bethesda CK Wiki<br>
+
+<h2>License</h2>
+
+<p>xEdit is licenced under the  Mozilla Public License Version 1.1</p>
+
+<a href="https://github.com/TES5Edit/TES5Edit/blob/dev/LICENSE.txt/">LICENSE</a>
+</div>
+<div>
+<h2>Authors and Contributors</h2>
+
+The original author is <a href="https://www.nexusmods.com/oblivion/users/167469//">ElminsterAU</a> and we were granted permission to continue his work.  Below is a list of contributors to the xEdit project.
+<ul>
+{% for member in site.data.members %}
+<li>
+  <a href="https://github.com/{{ member.github }}">
+    {{ member.name }}
+  </a>
+</li>
+{% endfor %}
+</ul>
+</div>

@@ -14,13 +14,13 @@
     <section class="page-header">
       <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+      {% include image.html url="https://tes5edit.github.io/"
+      max-width="130px" file="/assets/images/tes5edit ico blue.png" alt="TES5Edit"
+      caption="" %}
       <!-- {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
-      {% endif %} -->
-      <a href="https://github.com/TES5Edit/TES5Edit/releases/" class="btn">Downloads</a>
-      <a href="https://github.com/TES5Edit/fopdoc/" class="btn">fopdoc</a>
-      <a href="https://wrinklyninja.github.io/buddah/" class="btn">buddah</a>
-      <!-- {% if site.show_downloads %}
+      {% endif %}
+      {% if site.show_downloads %}
         <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
         <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
       {% endif %} -->
@@ -29,15 +29,6 @@
     <section class="main-content">
       {{ content }}
 
-      <ul>
-      {% for member in site.data.members %}
-        <li>
-          <a href="https://github.com/{{ member.github }}">
-            {{ member.name }}
-          </a>
-        </li>
-      {% endfor %}
-      </ul>
       <footer class="site-footer">
         {% if site.github.is_project_page %}
           <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
