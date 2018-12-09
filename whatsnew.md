@@ -1,3 +1,7 @@
+---
+layout: default
+title: xEdit
+---
 # What's new in xEdit 4.0.0?
 
 ## What's New
