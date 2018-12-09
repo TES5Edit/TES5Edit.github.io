@@ -3,6 +3,7 @@ description: An advanced graphical module editor for Bethesda Games
 google_analytics:
 # show_downloads: true
 theme: jekyll-theme-cayman
+highlighter: rouge
 
 gems:
   - jekyll-mentions
