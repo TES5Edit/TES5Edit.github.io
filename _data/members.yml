@@ -10,12 +10,15 @@
 - name: sheson
   github: sheson
 
-- name: WrinklyNinja
-  github: WrinklyNinja
+- name: Ortham a.k.a. WrinklyNinja
+  github: Ortham
 
 - name: fireundubh
   github: fireundubh
 
 - name: matortheeternal
   github: matortheeternal
+  
+- name: Jonathan Ostrus
+  github: jbostrus
 
