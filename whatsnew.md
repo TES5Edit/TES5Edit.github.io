@@ -1,3 +1,7 @@
+---
+layout: navigation
+title: xEdit
+---
 # What's new in xEdit 4.0.1?
 
 ## Bugfixes
