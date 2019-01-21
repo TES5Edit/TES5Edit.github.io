@@ -1,7 +1,31 @@
----
-layout: navigation
-title: xEdit
----
+# What's new in xEdit 4.0.1?
+
+## Bugfixes
+
+* #618 - 3.3 and 4.0.0 fail to update records when changing form IDs (breaks auto-renumbering, merging)
+* #619 - Assertion failure when running REPLACE MODEL FILE NAME script
+* (reported on Discord) - attempted reporting of encoding error might result in endless loop and crash
+* (reported on Discord) - back/forward mouse buttons do not work in 64bit
+* (reported on Discord) - Legend Form can show up with 0 size under some conditions
+* (reported on Discord) - [FNV] TCFU in INFO should be called "Follow Up"
+* (reported on Discord) - [TES5/SSE] "PlayerKnows" condition does not accept WOOP parameters
+* (reported on Discord) - broken `.bsa`/`.ba2` crashes the loading instead of just giving an error message
+* (reported on Discord) - Remove ITM should not apply to injected records
+* (reported on Discord) - "Dialog Topic" and "Worldspace" Groups can be very slow to expand
+* (reported on Discord) - Script access to TSearchRec is broken in 64bit
+* (found by developer) - the View tab is initially visible without a record having been selected in the navigation treeview
+* (found by developer) - main records do not correctly cache that they have already searched for a child group
+* (found by developer) - if the focused navigation treeview node is moved outside the current visible nodes, it is not scrolled into view automatically
+* (found by developer) - certain scripts with `for` loops or `case` statements might fail with `Integer required` error in 64 bit
+
+## PayPal Button
+
+By popular demand, a PayPal button has been added for people that prefer to make a one-off donation instead of pledging on Patreon.
+
+## NexusMods and GitHub buttons
+
+When a new update is available, the caption of the NexusMods and GitHub buttons will now be bold and underlined.
+
 # What's new in xEdit 4.0.0?
 
 ## What's New
