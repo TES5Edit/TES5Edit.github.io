@@ -2,6 +2,144 @@
 layout: navigation
 title: xEdit
 ---
+# What's new in xEdit 4.0.2?
+
+## Ko-Fi
+
+A number of users asked for a way to support xEdit development without using Patreon and/or PayPal.
+
+It is now possible to support xEdit development with both one time and monthly donations via Ko-Fi, charged directly to a credit card using stripe.com (or via PayPal) in AU$.
+
+The Ko-Fi Page is linked via the Ko-Fi button in the top right corner of the main form.
+
+## GamerPoets Videos
+
+A new "Videos" button has been added in the top right corner of the main form.
+
+This will open a YouTube playlist with xEdit specific videos by GamerPoets.
+
+## Bugfixes
+
+* #634 - [FO4] Unknown Perk Entrypoint 157
+* #636 - Adding a script fragment to a Quest's VMAD record doesn't update the fragmentCount field
+* (reported on Discord) - xEdit remembers (unwantedly) if the main form was minimized when it was last closes and restores that state
+* (reported on Discord) - When the same file is saved twice within the same second, it results in an error while renaming .save files on shutdown
+* (reported on Discord) - [FNV] Unused at the end of BMDT is wrongly defined as variable size (should always be 3 bytes)
+* (reported on Discord) - Collapsing of record storage (used when adding/removing/sorting masters) can under certain circumstances result in an assert while trying to save the file later
+* (reported on Discord) - "Deep Copy as Override" does not check records in child groups when looking for masters that need to be added to the target
+* (reported on Discord) - When using `Insert` key in the View, it is not possible to use Ctrl to flip the "Focus newly added elements in View" option
+* (reported on Discord) - [SSE] DATA in WATR is Unused
+* (reported on Discord) - Without theme, the icons in the top right corner have a black background (thanks shad0wshayd3 for the fix)
+* (found by developer) - Saving `.esm` or `.esl` files without ESM flag for SSE stripped ONAM instead of writing it as required (the game treats files with these extension always as having ESM)
+* (found by developer) - `AddMasters()` can be called with names that are not valid module files
+* (found by developer) - The navigation treeview unnecessarily checks nodes of them main game masters for changes
+* (found by developer) - [TES5/SSE] Words of Power in SHOU should not be alignable
+* (found by developer) - [FO3/FNV] Some strings that are translatable are not flagged as such
+* (found by developer) - [FO3/FNV] Sort FLST should be disabled by default
+* (found by developer) - Duplicate "Children of" GRUPs should report a non-fatal error instead of asserting
+
+## Collapsed Conditions
+
+Collapsed Conditions now display the condition in a easily readable compact 1 line format.
+
+Conditions are now collapsed by default. An option has been added to control this.
+
+## Collapse Arrays with Benign Conflict Priority by Default
+
+A new Option "Collapse Arrays with Benign Conflict Priority by Default" has been added (defaults to true).
+
+When this option is active, Arrays with a Conflict Priority of Benign will be initially collapsed.
+
+## Manual Cleaning functions are deprecated
+
+Manual Cleaning functions ('Apply Filter for Cleaning', 'Undelete and Disable References', and 'Remove "Identical to Master" records' are considered obsolete with the introduction of 'Quick Auto Clean' mode and will now only show a message explaining this.
+
+More information about Quick Auto Clean can be found in this What's New document (in multiple places below, use the search function).
+
+## [Very] Quick Show Conflicts, Quick [Auto] Clean, and Auto Game Link Sub Modes
+
+These sub modes of Edit mode can now be accessed using the name of the exe in addition to use of parameters.
+
+To use these modes, you can rename the as e.g.:
+
+* Very Quick Show Conflicts: `FO3EditVeryQuickShowConflicts.exe` or `TES4EditVQSC.exe`
+* Quick Show Conflicts: `SSEEditQuickShowConflicts.exe` or `TES5EditQSC.exe`
+* Quick Auto Clean: `FNVEditQuickAutoClean.exe` or `FO4EditQAC.exe`
+* Quick Clean: `TES4EditQuickClean.exe` or `SSEEditQC.exe`
+* Auto Game Link: `FO4EditAutoGameLink.exe` or `FO4EditAGL.exe`
+
+These sub modes will now show in the Window Caption of the Main Window, to make it easy to see that xEdit has been started in one of these modes.
+
+## Auto Load for Quick [Auto] Clean
+
+The `-autoload` parameter can be used together with `-quickautoclean` or `-quickclean` parameters.
+
+It is then necessary to specify the module that should be cleaned on the command line.
+
+e.g.: `SSEEdit.exe -quickautoclean -autoload update.esm`
+
+## Auto Exit
+
+The new `-autoexit` parameter can be used together with a number of different modes (e.g. Quick [Auto] Clean, LODGen, Script) to have xEdit automatically close after the operation is finished.
+
+## Enderal
+
+Initial support for Enderal has been added.
+
+xEdit can be renamed to `EnderalEdit.exe` or started with `-enderal` as parameter.
+
+A known problem currently is that if Enderal was installed in one location and then later moved to a different location with Steam, Steam does not update the registry with the new installation path and xEdit will be unable to find Enderal's Data path.
+
+## Fallout 76
+
+Definitions have been updated to account for increased form version in 1.0.4 and 1.0.5 patches.
+
+## Sorting of INFO records
+
+Problems with INFO sorting have been fixed and INFO sorting is automatically enabled by default for all games where it applies. (There should normally never be a need to turn it off, and turning it off can result in files being written that will not result in the correct INFO order when read by the game engine or CK.)
+
+Background Info: INFO records resolve their PNAM (previous INFO) reference at the moment they are loaded, for this to work correctly the referenced INFO record must have been loaded before. To achieve this, INFO records need to be sorted according to their PNAM before being written to file.
+
+The Sort INFO option has been split into "Sort INFO" (default to True) and "Fill missing PNAM" (default to False, to preserve the previous behaviour were Sort INFO was turned off by default).
+
+The navigation treeview now by default shows the INFO children of DIAL records in the order derived from their PNAM values (the same order that they are also displayed in CK and the order in which they are processed by the game) instead of sorted by FormID. This can be changed using the context menu on the FormID column header of the navigations treeview.
+
+New parameters have been added to control these two options (overriding whatever has been set in the options when used): `-SortINFO`, `-NoSortINFO`, `-FillPNAM`, and `-NoFillPNAM`.
+
+## ONAMUpdate Mode
+
+ONAM is the signature of a subrecord in the file header that's used to list all overridden records in temporary CELL children groups in the file. It is required for ESM flagged files to allow support for loading temporary records on-demand by the game engine. xEdit already automatically correctly writes ONAM for ESM flagged files.
+
+ONAMUpdate mode can be used to have xEdit fully automatically create ONAM subrecords also for all non ESM flagged files. The purpose is to support a new option in SSE Engine Fixes to make the game load all files as if they were masters. Further information about this can be found in SSE Engine Fixes.
+
+There is no reason to use ONAMUpdate mode if you aren't going to use that function in SSE Engine Fixes.
+
+To run xEdit in ONAMUpdate mode, you can either rename it to `SSEONAMUpdate.exe` or start it with the `-ONAMUpdate` parameter.
+
+A new Option "Always save ONAM" has been added (defaults to true). When this Option is active, xEdit will write ONAM when saving not ESM flagged files. (Without the Option, saving a non-ESM flagged file will strip out ONAM.)
+
+When running ONAMUpdate mode, this option will be turned on and is saved in the settings file.
+
+The option can be forced on using the `-AlwaysSaveONAM` parameter.
+
+## .bsa/.ba2 Handling
+
+xEdit specific code for `.bsa`/`.ba2` has been completely replaced with the code from `BSArch`.
+
+This change adds support for TES3 `.bsa` archives as well as support for for additional texture formats for FO4 and FO76 texture `.ba2` archives.
+
+It also fixes some issues where certain `.bsa` files (e.g. extra voices when language in Steam has been set to Polish for TES5) could result in an endless loop while starting xEdit.
+
+## Expert Options
+
+Some Options have been moved to a new Experts tab which is only visible if you Know What You Are Doing.
+
+## Shrinking SpeedButtons
+
+On the "UI Settings" tab, a new "Shrink SpeedButtons in the top right corner of the main form" Option has been added. The option is also available in the context menu of the buttons. (Thanks to shad0wshayd3 for improving the implementation.)
+
+Selecting this option will remove the captions from the Help / Videos / NexusMods / GitHub / Discord / Patreon / Ko-Fi / PayPal buttons.
+
 # What's new in xEdit 4.0.1?
 
 ## Bugfixes
@@ -1456,3 +1594,9 @@ This version contains no major new functionality, but a number of bugfixes. Upda
 - Mod Groups (more about that later)
 - Settings (records to skip, mod groups, filter) are loaded/saved into a .tes4viewsettings file with the same path and name as the plugins.txt (or the plugin list passed on the command line)
 - Possible range check error when loading a file with errors should be gone
+
+# You Know What You Are Doing
+
+You've read the whole What's New Document. Great! Hopefully this means that you know what you are doing now.
+
+If you start xEdit with a `-IKnowWhatImDoing` parameter, it will now longer show the "Edit Warning" dialog and unhide a few hidden Options and Functions.
