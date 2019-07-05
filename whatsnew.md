@@ -1,6 +1,6 @@
 ---
 layout: navigation
-title: xEdit
+title: xEdit What's New
 ---
 # What's new in xEdit 4.0.2?
 
