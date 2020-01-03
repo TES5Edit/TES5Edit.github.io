@@ -7,3 +7,5 @@ highlighter: rouge
 
 gems:
   - jekyll-mentions
+plugins:
+  - jekyll-relative-links
