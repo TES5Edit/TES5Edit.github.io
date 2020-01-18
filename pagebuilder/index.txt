@@ -1,0 +1,83 @@
+{{PAGETITLE="xEdit GitHub Page"}}
+xEdit is an advanced graphical module editor and conflict detector for Bethesda games. It currently supports Fallout 3, Fallout New Vegas, Fallout 4, Oblivion, Skyrim, and Skyrim SE.  We refer to the program as xEdit for short.
+
+When started xEdit will automatically find the Data directory. You then have a dialog box to select which masters/plugins you want to load with the current selection from your plugins.txt as default value.
+## Welcome to the xEdit GitHub Page.
+
+<div>
+    <a href="https://github.com/TES5Edit/TES5Edit/releases/" class="drkbtn">Downloads</a>
+    <a href="http://tes5edit.github.io/fopdoc/" class="drkbtn">fopdoc</a>
+    <a href="https://tes5edit.github.io/docs/" class="drkbtn">xEdit documentation</a>
+    <a href="https://ortham.github.io/buddah/" class="drkbtn">buddah</a>
+</div>
+
+{{CONTENTS=2}}
+## xEdit Cleaning Guide
+
+With the 4.0 update all previous guides are obsolete. Refer to the [[https://tes5edit.github.io/docs/5-mod-cleaning-and-error-checking.html#s_5-3-4 | xEdit Quick Auto Clean]]
+
+## GitHub Issue Tracker
+
+Our [[https://github.com/TES5Edit/TES5Edit/issues | GitHub issue tracker]] offers a place to submit and discuss feature requests and bug reports. When using it, please ensure that any criticism you provide is constructive.
+
+<font class="yellow">NOTE:</font> Please do not use the tracker for general help and support on how to use xEdit.
+
+## What's new in xEdit 4.0.3?
+
+Elminster has made significant changes between 3.2.2 and 4.0.x. Those changes are described in What's New and a document in rich text format is included with xEdit for offline viewing.
+
+[[whatsnew.html | What's New]]
+
+## Become a Patreon:
+
+[[https://www.patreon.com/ElminsterAU | ElminsterAU's Patreon Page]]
+    
+ElminsterAU has created a Patreon Page to outline his future xEdit development goals.
+
+## fopdoc
+
+The above button labeled fopdoc connects to the Fallout record definitions. It has complete definitions for Fallout 3 and Fallout New Vegas. Unfortunately Fallout 4 information is not finished yet. The fopdoc site was started and is maintained by Ortham.
+
+## buddah
+
+A simple registry for community-made game modding software by Ortham. If you would like to learn more then check out his blog post, [[https://ortham.github.io/2016/05/01/introducing-buddah.html | Introducing Buddah]]
+
+## Wiki Pages
+
+Originally pages were available at the Bethesda CK Wiki. Some pages have already been depreciated and others will be depreciated once the xEdit documentation has been updated.
+
+[[https://www.creationkit.com/index.php?title=Category:TES5Edit | TES5Edit]]
+
+## Current Documentation
+
+The Fallout 3 training manual was converted by EpFwip to html format. [[https://tes5edit.github.io/docs/ | Tome of xEdit]]
+
+## Previous Documentation
+
+The original Fallout 3 and Fallout NV training manuals are still available for download for offline viewing in PDF format.
+
+[[bb:Sharlikran]]
+<font class="yellow">NOTE:</font> The previous PDF documentation is no longer availabe online. I am sad to see it go. It was a part of history for me.
+[[be:]]
+## License
+
+xEdit is licensed under the  Mozilla Public License Version 1.1
+[[https://github.com/TES5Edit/TES5Edit/blob/dev/LICENSE.txt | LICENSE]]
+
+## Authors and Contributors
+
+The original author is [[https://www.nexusmods.com/oblivion/users/167469/ | ElminsterAU]] and we were granted permission to continue his work.  Below is a list of contributors to the xEdit project.
+
+<ul>
+    {% for member in site.data.members %}
+    <li>
+        <a href="https://github.com/{{ member.github }}">
+        {{ member.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+## Additional Content Contributors
+
+[[https://moiman100.deviantart.com/art/Tes5edit-Icons-467927896 | moiman100]] xEdit icons
+[[https://starfish20.deviantart.com/art/FO3Edit-Vault-Boys-396309590 | starfish20]] Fallout Boy xEdit icons

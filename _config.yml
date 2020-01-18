@@ -1,6 +1,9 @@
 title: xEdit
 description: An advanced graphical module editor for Bethesda Games
 google_analytics:
+exclude: [
+  'pagebuilder/',
+]
 # show_downloads: true
 theme: jekyll-theme-cayman
 
