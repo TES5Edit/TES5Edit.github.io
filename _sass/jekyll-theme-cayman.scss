@@ -129,7 +129,11 @@ body {
 
 .drkbtn {
   display: inline-block;
-  margin: 0.25rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.90rem;
+  @include small {
+    margin-left: 0;
+  }
   /* Preserve these colors the look goof on the header background */
   color: rgba(255, 255, 255, 1.0);
   background-color: rgba(23, 130, 130, 0.9);
@@ -143,6 +147,9 @@ body {
     color: rgba(255, 255, 255, 0.8);
     background-color: rgba(34, 195, 195, 0.7);
     border-color: rgba(255, 255, 255, 0.3)
+  }
+  +.drkbtn {
+    margin-left: 0.50rem;
   }
   @include full {
     padding: 0.9rem;
@@ -163,8 +170,12 @@ body {
   @include small {
     display: block;
     width: 100%;
-    padding: 0.70rem;
+    padding: 0.60rem;
     font-size: 0.9rem;
+    +.drkbtn {
+      margin-top: 0.5rem;
+      margin-left: 0;
+    }
   }
 }
 
@@ -398,11 +409,11 @@ body {
   }
   figure.image-caption {
     @include full {
-      max-width: 40%;
+      max-width: 50%;
       padding: 10px;
     }
     @include huge {
-      max-width: 40%;
+      max-width: 50%;
       padding: 10px;
     }
     @include large {
@@ -428,6 +439,9 @@ body {
     padding-left: 0.25rem;
     font-weight: normal;
     color: var(--toc-header-text);
+  }
+  iframe {
+	margin: 0.38rem 0 0.38rem 0.95rem;
   }
   p {
 	margin: 0 0 0 0.95rem;
@@ -497,6 +511,9 @@ body {
   ol {
     margin-top: 0;
   }
+  .list-no-bullet {
+    list-style-type: none
+  }
   blockquote {
     padding: 0 0.75rem;
     margin-left: 0;
@@ -524,7 +541,7 @@ body {
     th,
     td {
       padding: 0.25rem 0.75rem;
-      border: 1px solid var(--header1-border);
+      border: 0.13rem solid var(--header-border);
     }
   }
   dl {
@@ -786,7 +803,20 @@ a.yellow {
 
 /* Main content for Wrte Text Paragraphs */
 .main-content {
-  p.empty {
+  p.empty {}
+  p.note {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background-color: var(--code-background);
+    background-image: url(../../img/note.png);
+    background-position: 9px 0px;
+    background-repeat: no-repeat;
+    border: solid 0.13rem var(--header-border);
+    border-radius: 6px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 15px 60px;
+    margin: 0 1rem;
   }
   p.list-1 {
     margin-left: 0.9rem;
