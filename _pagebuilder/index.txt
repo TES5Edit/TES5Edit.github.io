@@ -46,7 +46,7 @@ The Fallout 3 training manual was converted by EpFwip to html format. [[https://
 
 ## Previous Documentation
 
-You can find the original PDF documentation if you want to see what it looks like. It is recomended to use the cirrent documentation because it's much more up to date. The original files [[https://www.nexusmods.com/fallout3/mods/8629 | FO3Edit Training Manual]] and the [[https://www.nexusmods.com/newvegas/mods/38413 | FNVEdit Training Manual]] are by Miax (Kristopher Kortright) and JustinOther.
+You can find the original PDF documentation if you want to see what it looks like. It is recomended to use the current documentation because it's much more up to date. The original files [[https://www.nexusmods.com/fallout3/mods/8629 | FO3Edit Training Manual]] and the [[https://www.nexusmods.com/newvegas/mods/38413 | FNVEdit Training Manual]] are by Miax (Kristopher Kortright) and JustinOther.
 
 ## License
 
