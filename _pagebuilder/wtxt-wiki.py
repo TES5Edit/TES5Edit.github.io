@@ -236,10 +236,10 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     # --Misc. text
     reHRule = re.compile(r'^\s*-{4,}\s*$')
     reEmpty = re.compile(r'\s+$')
-    reMDash = re.compile(r'--')
+    reMDash = re.compile(r'-em-')
     rePreBegin = re.compile('<pre>', re.I)
     rePreEnd = re.compile('</pre>', re.I)
-    reParagraph = re.compile('<p\s+|<p>', re.I)
+    reParagraph = re.compile('<p[\s]+|<p>', re.I)
     reCloseParagraph = re.compile('</p>', re.I)
     # --Bold, Italic, BoldItalic
     reBold = re.compile(r'__')
@@ -248,11 +248,12 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     states = {'bold': False, 'italic': False, 'boldItalic': False}
     # --Links
     reLink = re.compile(r'\[\[(.+?)\]\]')
-    reHttp = re.compile(r' (http:\/\/[\?=_~a-zA-Z0-9\.\/%-]+)')
-    reWww = re.compile(r' (www\.[\?=_~a-zA-Z0-9\./%-]+)')
+    reHttp = re.compile(r' (http:\/\/[\?=_~a-zA-Z0-9\.\/%-]+)| (https:\/\/[\?=_~a-zA-Z0-9\.\/%-]+)')
+    reWww = re.compile(r' (www\.[_~a-zA-Z0-9\./%-]+)')
     reWd = re.compile(r'(<[^>]+>|\[[^\]]+\]|\W+)')
     rePar = re.compile(r'^([a-zA-Z\d]|\*\*|~~|__|^\.{1,}|^\*{1,}|^\"{1,})')
     reFullLink = re.compile(r'(:|#|\.[a-zA-Z0-9]{2,4}$)')
+    reLinkWithHashtag = re.compile(r'(.*)(#(.*))$')
     # --TextColors
     reTextColor = re.compile(r'{{a:(.+?)}}')
     # --Tags
@@ -260,6 +261,7 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     reContentsTag = re.compile(r'\s*{{CONTENTS=?(\d+)}}\s*$')
     reCssTag = re.compile('\s*{{CSS:(.+?)}}\s*$')
     reTitleTag = re.compile(r'^{{PAGETITLE="(.+?)"}}')
+    reNoteTag = re.compile(r'^{{note:(.+?)}}')
     reComment = re.compile(r'^\/\*.+\*\/')
     reCTypeBegin = re.compile(r'^\/\*')
     reCTypeEnd = re.compile('\*\/$')
@@ -267,7 +269,6 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     reSpoilerEnd = re.compile(r'\[\[se:\]\]')
     reBlockquoteBegin = re.compile(r'\[\[bb:(.*?)\]\]')
     reBlockquoteBEnd = re.compile(r'\[\[be:\]\]')
-    reHtmlBegin = re.compile(r'(^\<font.+?\>)|(^\<code.+?\>)|(^\<a\s{1,3}href.+?\>)|(^\<a\s{1,3}(class=".+?)?href.+?\>)|(^\<img\s{1,3}src.+?\>)|^\u00A9|^\<strong|^\<[bB]\>|(^{% include image)')
     reNavigationButtonBegin = re.compile(r'{{nbb}}')
     reNavigationButtonEnd = re.compile(r'{{nbe}}')
     # --Open files
@@ -277,6 +278,10 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     reImageOnly = re.compile(r'{{image:(.+?)}}')
     reImageCaption = re.compile(r'{{image-caption:(.+?)}}')
     reImageCaptionUrl = re.compile(r'{{image-cap-url:(.+?)}}')
+    # --Exclude from Paragraphs
+    # reHtmlBegin = re.compile(r'(^\<font.+?\>)|(^\<code.+?\>)|(^\<a\s{1,3}href.+?\>)|(^\<a\s{1,3}(class=".+?)?href.+?\>)|(^\<img\s{1,3}src.+?\>)|^\u00A9|^\<strong|^\<[bB]\>|(^{% include image)')
+    reHtmlNotPar = re.compile(r'\<h\d[>]?|<hr>|{{CONTENTS|class="drkbtn"|<[\/]?div>|<div id=|<div class=|<[\/]?iframe')
+    reLiquidOnly = re.compile(r'{% raw %}|{% endraw %}')
 
     def imageInline(maObject):
         image_line = maObject.group(1).strip()
@@ -310,15 +315,15 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
         spoilerID = spoilerID.lower()
         return (spoilerID, spoilerText)
 
-    def httpReplace(line):
-        temp_text = line
+    def httpReplace(maObject):
+        temp_text = maObject.group(1)
         if inNavigationButtons:
-            temp_line = reHttp.sub(r' <a href="\1" class="drkbtn">\1</a>', temp_text)
+            temp_line = '<a href="{}" class="drkbtn">{}</a>'.format(temp_text, temp_text)
         else:
-            temp_line = reHttp.sub(r' <a href="\1">\1</a>', temp_text)
+            temp_line = '<a href="{}">{}</a>'.format(temp_text, temp_text)
         return temp_line
 
-    def wwwReplace(line):
+    def wwwReplace(maObject):
         temp_text = line
         if inNavigationButtons:
             temp_line = reWww.sub(r' <a href="http://\1" class="drkbtn">\1</a>', temp_text)
@@ -333,8 +338,25 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
         else:
             address = text = link_object
         fontClass, text = strip_color(text)
-        if address == '#':
-            address += reWd.sub('', text)
+        text_only_object = reLinkWithHashtag.search(address)
+        if text_only_object:
+            group1 = text_only_object.group(1)
+            group2 = text_only_object.group(2)
+            group3 = text_only_object.group(3)
+            # [[#|Implementing The Method]]
+            if len(group1) == 0 and len(group3) == 0 and group2 == '#':
+                address += reWd.sub('', text)
+            # [[#Implementing The Method | Implementing The Method]]
+            if len(group1) == 0 and len(group3) > 0 and address.find('#') == 0:
+                anchor_out = reWd.sub('', group3)
+                address = '#{}'.format(anchor_out)
+            # [[5-themethod.html#Implementing The Method | Implementing The Method]]
+            if (len(group1) > 0) and (len(group3) > 0) and (address.find('#') > 0) and not (group1.find(':') > 0):
+                anchor_out = reWd.sub('', group3)
+                address = '{}#{}'.format(group1, anchor_out)
+            # [[https://wiki.step-project.com/Guide:Troubleshooting#How_do_I_restore_vanilla_Skyrim.3F | This]]
+            if (address.find('#') > 0) and group1.find(':') > 0:
+                address = '{}#{}'.format(group1, group3)
         if inNavigationButtons:
             return '<a {} href="{}" class="drkbtn">{}</a>'.format(fontClass, address, text)
         else:
@@ -355,10 +377,18 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
     dupeEntryCount = 1
     blockAuthor = "Unknown"
     inNavigationButtons = False
+    inLiquidOnly = False
+    inSpoilerBlock = False
     pageTitle = 'title: Your Content'
     # --Read source file --------------------------------------------------
     ins = open(srcFile, 'r')
     for line in ins:
+        inLiquidOnly = False
+        # --CSS
+        maCss = reCssTag.match(line)
+        if maCss:
+            cssFile = maCss.group(1).strip()
+            continue
         # --Preformatted Text Block -----------------------------
         maPreBegin = rePreBegin.search(line)
         maPreEnd = rePreEnd.search(line)
@@ -370,34 +400,40 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
             inPre = False
             outLines.append(line)
             continue
+        # --Spoiler Tag ---------------------------
+        maSpoilerBegin = reSpoilerBegin.match(line)
+        maSpoilerEnd = reSpoilerEnd.match(line)
+        if maSpoilerBegin:
+            spoilerline = maSpoilerBegin.group(1)
+            spoilerID, spoilerName = spoilerTag(spoilerline)
+            firstLine = '<input type="checkbox" id="{}" />\n'.format(spoilerID)
+            outLines.append(firstLine)
+            secondLine = '<label for="{}">{}</label>\n'.format(spoilerID, spoilerName)
+            outLines.append(secondLine)
+            thirdLine = '<div class="main-content">\n'
+            outLines.append(thirdLine)
+            continue
+        if maSpoilerEnd:
+            line = '</div>\n'
+            outLines.append(line)
+            continue
+        # --Page Title -------------------------------
         maTitleTag = reTitleTag.match(line)
+        if maTitleTag:
+            temp = reTitleTag.match(line)
+            pageTitle = 'title: {}'.format(temp.group(1))
+            continue
+        maComment = reComment.match(line)
         maCTypeBegin = reCTypeBegin.match(line)
         maCTypeEnd = reCTypeEnd.search(line)
-        maComment = reComment.match(line)
         if maComment:
             continue
         if inComment or maCTypeBegin or maCTypeEnd or maComment:
             inComment = maCTypeBegin or (inComment and not maCTypeEnd)
             continue
-        if maTitleTag:
-            temp = reTitleTag.match(line)
-            pageTitle = 'title: {}'.format(temp.group(1))
-        # --Re Matches -------------------------------
-        maContents = reContentsTag.match(line)
-        maCss = reCssTag.match(line)
-        maHead = reHead.match(line)
-        maHeadgreen = reHeadGreen.match(line)
-        maList = reList.match(line)
-        maPar = rePar.match(line)
-        maHRule = reHRule.match(line)
-        maEmpty = reEmpty.match(line)
-        maSpoilerBegin = reSpoilerBegin.match(line)
-        maSpoilerEnd = reSpoilerEnd.match(line)
-        maBlockquoteBegin = reBlockquoteBegin.match(line)
-        maBlockquoteEnd = reBlockquoteBEnd.match(line)
+        # --Navigation Buttons ----------------------------------
         maNavigationButtonBegin = reNavigationButtonBegin.match(line)
         maNavigationButtonEnd = reNavigationButtonEnd.match(line)
-        # --Navigation Buttons ----------------------------------
         if maNavigationButtonBegin:
             line = '<div>\n'
             inNavigationButtons = True
@@ -405,17 +441,40 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
             line = '</div>\n'
             inNavigationButtons = False
         # --Contents ----------------------------------
+        maContents = reContentsTag.match(line)
         if maContents:
-            if maContents.group(1):
-                addContents = int(maContents.group(1))
-            else:
-                addContents = 100
-        # --CSS
-        elif maCss:
-            cssFile = maCss.group(1).strip()
+            temp_var = maContents.group(1)
+            addContents = int(temp_var)
+        # --Re Note -------------------------------
+        maNoteTag = reNoteTag.match(line)
+        if maNoteTag:
+            note_text = maNoteTag.group(1)
+            line = '<p class="note">{}</p>\n'.format(note_text)
+        # --Blockquote ---------------------------
+        maBlockquoteBegin = reBlockquoteBegin.match(line)
+        maBlockquoteEnd = reBlockquoteBEnd.match(line)
+        if maBlockquoteBegin:
+            firstLine = '<section class="quote">\n'
+            outLines.append(firstLine)
+            author = maBlockquoteBegin.group(1)
+            if len(author) < 1:
+                author = blockAuthor
+            authorLine = '<p class="attr">{}</p>\n'.format(author)
+            outLines.append(authorLine)
             continue
+        if maBlockquoteEnd:
+            line = '</section>\n'
+            outLines.append(line)
+            continue
+        # --Re Matches -------------------------------
+        maHead = reHead.match(line)
+        maHeadgreen = reHeadGreen.match(line)
+        maList = reList.match(line)
+        maPar = rePar.match(line)
+        maHRule = reHRule.match(line)
+        maEmpty = reEmpty.match(line)
         # --Headers
-        elif maHead:
+        if maHead:
             lead, text = maHead.group(1, 2)
             text = re.sub(' *=*$', '', text.strip())
             anchor = reWd.sub('', text)
@@ -467,34 +526,8 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
         # --Empty line
         elif maEmpty:
             line = spaces + '<p class="empty">&nbsp;</p>\n'
-        # --Spoiler Tag ---------------------------
-        elif maSpoilerBegin:
-            spoilerline = maSpoilerBegin.group(1)
-            spoilerID, spoilerName = spoilerTag(spoilerline)
-            firstLine = '<input type="checkbox" id="{}" />\n'.format(spoilerID)
-            outLines.append(firstLine)
-            secondLine = '<label for="{}">{}</label>\n'.format(spoilerID, spoilerName)
-            outLines.append(secondLine)
-            thirdLine = '<div class="spoiler">\n'
-            outLines.append(thirdLine)
-            continue
-        elif maSpoilerEnd:
-            line = '</div>\n'
-        # --Blockquote ---------------------------
-        elif maBlockquoteBegin:
-            firstLine = '<section class="quote">\n'
-            outLines.append(firstLine)
-            author = maBlockquoteBegin.group(1)
-            if len(author) < 1:
-                author = blockAuthor
-            authorLine = '<p class="attr">{}</p>\n'.format(author)
-            outLines.append(authorLine)
-            continue
-        elif maBlockquoteEnd:
-            line = '</section>\n'
         # --Misc. Text changes --------------------
-        line = reMDash.sub('&#150', line)
-        line = reMDash.sub('&#150', line)
+        line = reMDash.sub('&mdash;', line)
         # --Bold/Italic subs
         line = reBold.sub(boldReplace, line)
         line = reItalic.sub(italicReplace, line)
@@ -508,12 +541,16 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
         line = reImageCaptionUrl.sub(imageCaptionUrl, line)
         # --Hyperlinks
         line = reLink.sub(linkReplace, line)
-        line = httpReplace(line)
-        line = wwwReplace(line)
+        line = reHttp.sub(httpReplace, line)
+        # line = reWww.sub(wwwReplace, line)
         # --HTML Font or Code tag first of Line ------------------
-        maHtmlBegin = reHtmlBegin.match(line)
-        if maHtmlBegin:
-            maParagraph = reParagraph.match(line)
+        maHtmlNotPar = reHtmlNotPar.search(line)
+        maLiquidOnly = reLiquidOnly.search(line)
+        if maLiquidOnly:
+            if line == '{% raw %}\n' or line == '{% endraw %}\n':
+                inLiquidOnly = True
+        if not maHtmlNotPar and not inLiquidOnly:
+            maParagraph = reParagraph.search(line)
             maCloseParagraph = reCloseParagraph.search(line)
             if not maParagraph:
                 line = '<p>' + line
@@ -521,10 +558,7 @@ def wtxtToHtml(srcFile, outFile=None, cssDir=''):
                 line = re.sub(r'(\n)?$', '', line)
                 line = line + '</p>\n'
         # --Save line ------------------
-        if maTitleTag:
-            pass
-        else:
-            outLines.append(line)
+        outLines.append(line)
     ins.close()
     # --Get Css -----------------------------------------------------------
     if not cssFile:
