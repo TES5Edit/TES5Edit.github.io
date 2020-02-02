@@ -6,7 +6,7 @@ When started xEdit will automatically find the Data directory. You then have a d
 {{CONTENTS=2}}
 ## xEdit Cleaning Guide
 
-With the 4.0 update all previous guides are obsolete. Refer to the [[https://tes5edit.github.io/docs/5-mod-cleaning-and-error-checking.html#s_5-3-4 | xEdit Quick Auto Clean]]
+With the 4.0 update all previous guides are obsolete. Refer to the [[https://tes5edit.github.io/docs/6-mod-cleaning-and-error-checking.html#ThreeEasyStepstocleanMods | xEdit Quick Auto Clean]]
 
 ## GitHub Issue Tracker
 
