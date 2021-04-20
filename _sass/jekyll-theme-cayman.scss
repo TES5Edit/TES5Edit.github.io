@@ -235,7 +235,7 @@ body {
   display: grid;
   color: var(--cayman-header-heading);
   background-color: var(--cayman-header-background);
-  background-image: linear-gradient(120deg, rgb(15, 64, 112), rgb(22, 89, 157), rgb(15, 112, 64), rgb(22, 157, 89));
+  background-image: linear-gradient(180deg, rgb(0,0,0), rgb(5, 76, 122), rgb(9, 127, 204), rgb(51, 169, 246), rgb(133, 204, 250));
   div.gridhead2 {
     text-align: right;
   }
@@ -281,6 +281,26 @@ body {
     }
     div.gridhead6 {
       text-align: center;
+    }
+  }
+  figure {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    @include full {
+      max-width: 50%;
+    }
+    @include huge {
+      max-width: 50%;
+    }
+    @include large {
+      max-width: 50%;
+    }
+    @include medium {
+      max-width: 75%;
+    }
+    @include small {
+      max-width: 90%;
     }
   }
 }
@@ -838,6 +858,31 @@ a.yellow {
   }
 }
 
+.main-content {
+  img.inline {
+    @include full {
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+    @include huge {
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+    @include large {
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+    @include medium {
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+    @include small {
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+  }
+}
+
 section.quote {
   display: block;
   justify-content: center;
@@ -915,6 +960,55 @@ figure.image-caption {
   }
 }
 
+.main-content {
+  img.thumbnail {
+    @include full {
+      max-width: 40%;
+    }
+    @include huge {
+      max-width: 40%;
+    }
+    @include large {
+      max-width: 40%;
+    }
+    @include medium {
+      max-width: 65%;
+    }
+    @include small {
+      max-width: 80%;
+    }
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: block;
+}
+
+.tooltip .tooltiptext {
+  display: block;
+  visibility: hidden;
+  width: auto;
+  color: var(--header4-text);
+  background-color: var(--code-background);
+  border-color: var(--header-border);
+  border-style: solid;
+  text-align: center;
+  border-radius: 6px;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  left: 0.9rem;
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 .short-column {
   width: 5%;
 }
@@ -955,4 +1049,26 @@ figure.image-caption {
 
 .site-footer-credits {
   color: var(--cayman-blockquote-text);
+}
+
+.cmp-no,
+.cmp-unknown,
+.cmp-yes {
+  background-repeat: no-repeat;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cmp-yes {
+  background-image: url(../../img/tick.png);
+}
+
+.cmp-no {
+  background-image: url(../../img/cross.png);
+}
+
+.cmp-unknown {
+  background-image: url(../../img/question.png);
 }
