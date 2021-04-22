@@ -249,22 +249,26 @@ body {
     text-align: center;
   }
   @include full {
-    grid-template-areas: 'padding1 image header padding2'
+    grid-template-areas:
+    'padding1 image header padding2'
     'nav-buttons nav-buttons nav-buttons nav-buttons'
     'page-buttons page-buttons page-buttons page-buttons';
   }
   @include huge {
-    grid-template-areas: 'padding1 image header padding2'
+    grid-template-areas:
+    'padding1 image header padding2'
     'nav-buttons nav-buttons nav-buttons nav-buttons'
     'page-buttons page-buttons page-buttons page-buttons';
   }
   @include large {
-    grid-template-areas: 'padding1 image header padding2'
+    grid-template-areas:
+    'padding1 image header padding2'
     'nav-buttons nav-buttons nav-buttons nav-buttons'
     'page-buttons page-buttons page-buttons page-buttons';
   }
   @include medium {
-    grid-template-areas: 'padding1 image header padding2'
+    grid-template-areas:
+    'padding1 image header padding2'
     'nav-buttons nav-buttons nav-buttons nav-buttons'
     'page-buttons page-buttons page-buttons page-buttons';
   }
@@ -553,8 +557,7 @@ body {
     width: calc(100% - (0.9rem * 2));
     overflow: auto;
     word-break: normal;
-    word-break: keep-all;
-    /* For Firefox to horizontally scroll wider tables. */
+    word-break: keep-all; /* For Firefox to horizontally scroll wider tables. */
     -webkit-overflow-scrolling: touch;
     margin-left: 0.9rem;
     margin-right: 0.9rem;
